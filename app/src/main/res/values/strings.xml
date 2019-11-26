@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TheMovieApp</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_movie">Movie</string>
+    <string name="tab_tv_show">TV Show</string>
+    <string name="tab_favorite">Favorite</string>
+    <string name="example_description">Example Description</string>
+    <string name="example_title">Example Title</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="fav_bar">Favorite</string>
+</resources>

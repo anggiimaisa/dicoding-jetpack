@@ -1,0 +1,54 @@
+/*
+ * Copyright 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package androidx.fragment.app;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
+import androidx.annotation.StringRes;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.util.List;
+
+/**
+ * Static library support version of the framework's {@link android.app.FragmentManager}.
+ * Used to write apps that run on platforms prior to Android 3.0.  When running
+ * on Android 3.0 or above, this implementation is still used; it does not try
+ * to switch to the framework's implementation.  See the framework {@link FragmentManager}
+ * documentation for a class overview.
+ *
+ * <p>Your activity must derive from {@link FragmentActivity} to use this. From such an activity,
+ * you can acquire the {@link FragmentManager} by calling
+ * {@link FragmentActivity#getSupportFragmentManager}.
+ */
+public abstract class FragmentManager {
+    static final FragmentFactory DEFAULT_FACTORY = new FragmentFactory();
+
+    /**
+     * Representation of an entry on the fragment back stack, as created
+     * with {@link FragmentTransaction#addToBackStack(String)
+     * FragmentTransaction.addToBackStack()}.  Entries can

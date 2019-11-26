@@ -1,0 +1,72 @@
+package com.example.footballleague
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.NonNull
+import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.footballleague.common.FavoriteMatch
+import com.example.footballleague.common.Match
+import com.example.footballleague.databinding.FragmentMatchBinding
+import com.example.footballleague.db.database
+import com.example.footballleague.match.DBMatchAdapter
+import com.example.footballleague.match.MatchAdapter
+import com.example.footballleague.match.MatchViewModel
+import com.example.footballleague.team.TeamViewModel
+import com.example.footballleague.viewmodel.ViewModelFactory
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.select
+
+class DBPastMatchFragment : Fragment() {
+
+    lateinit var binding : FragmentMatchBinding
+    lateinit var matchViewModel: MatchViewModel
+    lateinit var teamViewModel: TeamViewModel
+    lateinit var matches: List<FavoriteMatch>
+
+    companion object {
+
+        lateinit var matchAdapter : DBMatchAdapter
+        fun newInstance() : Fragment {
+            val fragment = DBPastMatchFragment()
+            return fragment
+        }
+
+        fun searchEvent(searchView: SearchView) {
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    matchAdapter.filter.filter(newText)
+                    return true
+                }
+
+            })
+        }
+
+        @NonNull
+        private fun obtainMatchViewModel(fragment: DBPastMatchFragment) : MatchViewModel {
+            val viewModelFactory = ViewModelFactory.getInstance(fragment.activity!!.application)
+            return ViewModelProviders.of(fragment, viewModelFactory).get(MatchViewModel::class.java)
+        }
+
+        @NonNull
+        private fun obtainTeamViewModel(fragment: DBPastMatchFragment) : TeamViewModel {
+            val viewModelFactory = ViewModelFactory.getInstance(fragment.activity!!.application)
+            return ViewModelProviders.of(fragment, viewModelFactory).get(TeamViewModel::class.java)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        teamViewModel = obtainTeamViewModel(this)
+ 
